@@ -1,5 +1,15 @@
 import telebot
 from telebot import types
+import mysql.connector
+
+'''mydb = mysql.connector.connect(#это хуйня для соеденения
+    host='localhost',
+    user='root',
+    password='IosifStalin2',
+    port='3306',
+    database='weather'
+)
+'''
 
 bot = telebot.TeleBot('5515564481:AAHyZdFrYrJv_uoKj3Z3zZyCyTvuZbe_9pU')
 
@@ -20,10 +30,11 @@ def website(message):
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     chooseProfession = types.KeyboardButton('Выбор специальностей')
+    studentsList = types.KeyboardButton('Списки абитуриентов')
     specialize = types.KeyboardButton('Специальности')
     adaptation = types.KeyboardButton('Все для адаптации')
     howToEntry = types.KeyboardButton('Как поступить?')
-    markup.add(chooseProfession, specialize, adaptation, howToEntry)
+    markup.add(chooseProfession, studentsList, specialize, adaptation, howToEntry)
     bot.send_message(message.chat.id, 'Привет тебе, дорогой абитуриент! Это главное мое меню, можешь ознакомиться со всеми моими возможностями прямо тут! ', reply_markup=markup)
 
 
@@ -52,12 +63,20 @@ def choose_specialize(message):
         bot.send_message(message.chat.id,
                          "У нас в колледже есть различные специальности! Чтобы увидеть информацию, выберите кнопку с соотвутствующей специальностью.",
                          parse_mode='html')
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         design = types.KeyboardButton('дизайнеры')
         builders = types.KeyboardButton('строители')
         tourism = types.KeyboardButton('туристы')
+        progers = types.KeyboardButton('программисты')
+        infsys = types.KeyboardButton('информационные системы')
+        infsec = types.KeyboardButton('информационная безопасность')
+        con = types.KeyboardButton('связисты')
+        gas = types.KeyboardButton('газовики')
+        vehicle = types.KeyboardButton('механики')
+        hotel = types.KeyboardButton('гостиничный бизнес')
+        econom = types.KeyboardButton('экономисты')
         back = types.KeyboardButton('Назад')
-        markup.add(design, builders, tourism, back)
+        markup.add(design, builders, tourism, progers, infsys, infsec, con, gas, vehicle, hotel, econom, back)
         bot.send_message(message.chat.id, 'Просмотрите списки профессий', reply_markup=markup)
     elif message.text == "Все для адаптации":
         bot.send_message(message.chat.id,
@@ -74,29 +93,117 @@ def choose_specialize(message):
     elif message.text == "Как поступить?":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         marks = types.KeyboardButton('Список основных документов')
-        rings = types.KeyboardButton('text')
-        buildings = types.KeyboardButton('text')
-        cabinet = types.KeyboardButton('text')
+        rings = types.KeyboardButton('Расчет конкурсных баллов')
         back = types.KeyboardButton('Назад')
-        markup.add(marks, rings, buildings, cabinet, back)
+        markup.add(marks, rings, back)
+        bot.send_message(message.chat.id, 'Кнопки доступны в меню!', reply_markup=markup)
+    elif message.text == "Списки абитуриентов":
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        marks = types.KeyboardButton('Выбрать специальность!')
+        back = types.KeyboardButton('Назад')
+        markup.add(marks, back)
         bot.send_message(message.chat.id, 'Кнопки доступны в меню!', reply_markup=markup)
 
 
+    # СПИСКИ АБИТУРИЕНТОВ
+    elif message.text == "Выбрать специальность!":
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        design = types.KeyboardButton('дизайнеры_2022')
+        builders = types.KeyboardButton('строители_2022')
+        tourism = types.KeyboardButton('туристы_2022')
+        progers = types.KeyboardButton('программисты_2022')
+        infsys = types.KeyboardButton('информационные системы_2022')
+        infsec = types.KeyboardButton('информационная безопасность_2022')
+        con = types.KeyboardButton('связисты_2022')
+        gas = types.KeyboardButton('газовики_2022')
+        vehicle = types.KeyboardButton('механики_2022')
+        hotel = types.KeyboardButton('гостиничный бизнес_2022')
+        econom = types.KeyboardButton('экономисты_2022')
+        back = types.KeyboardButton('Назад')
+        markup.add(design, builders, tourism, progers, infsys, infsec, con, gas, vehicle, hotel, econom, back)
+        bot.send_message(message.chat.id, 'Просмотрите списки профессий', reply_markup=markup)
+    elif message.text == "дизайнеры_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "строители_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "туристы_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "программисты_2022":
+        bot.send_message(message.chat.id, 'Введите фамилию')
+        stre = message.text
+        count = 0;  # не трогай
+
+        #mycursor = mydb.cursor()
+
+        #mycursor.execute('select * from users order by scorefull desc, scoreprof desc')  # сортировка
+
+        #users = mycursor.fetchall()
+
+        #for user in users:  # это вообще не трогай
+        #    count += 1
+        #    if user[1] == stre:
+        #        messageStr = "Ты находишься на " + str(count) + " месте"
+        #        bot.send_message(message.chat.id, messageStr)
+
+    elif message.text == "информационные системы_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "информационная безопасность_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "связисты_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "газовики_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "механики_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "гостиничный бизнес_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+    elif message.text == "экономисты_2022":
+        bot.send_message(message.chat.id, 'Находится в разработке =)')
+
     # КНОПКИ ДЛЯ ВЫБОРА СПЕЦИАЛЬНОСТЕЙ
     elif message.text == "дизайнеры":
+        photo = open('pic\graduates info\design.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
         photo = open('pic\graduates info\дизайнер.png', 'rb')
         bot.send_photo(message.chat.id, photo)
     elif message.text == "строители":
+        photo = open('pic\graduates info\guilder.png', 'rb')
+        bot.send_photo(message.chat.id, photo)
         photo = open('pic\graduates info\строитель1.png', 'rb')
         photo1 = open('pic\graduates info\строитель2.png', 'rb')
         bot.send_photo(message.chat.id, photo)
         bot.send_photo(message.chat.id, photo1)
     elif message.text == "туристы":
+        photo = open('pic\graduates info\dourism.png', 'rb')
+        bot.send_photo(message.chat.id, photo)
         photo = open('pic\graduates info\туризм1.png', 'rb')
         photo1 = open('pic\graduates info\туризм2.png', 'rb')
         bot.send_photo(message.chat.id, photo)
         bot.send_photo(message.chat.id, photo1)
-
+    elif message.text == "программисты":
+        photo = open('pic\graduates info\progers.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "информационные системы":
+        photo = open('pic\graduates info\infsys.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "информационная безопасность":
+        photo = open('pic\graduates info\infsec.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "связисты":
+        photo = open('pic\graduates info\cadio.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "газовики":
+        photo = open('pic\graduates info\gas.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "механики":
+        photo = open('pic\graduates info\mashina.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "гостиничный бизнес":
+        photo = open('pic\graduates info\ogh.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+    elif message.text == "экономисты":
+        photo = open('pic\graduates info\econom.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
 
     # ГЛАВНОЕ МЕНЮ
     elif message.text == "Поступление в #APC2022 на бесплатное обучение":
@@ -152,7 +259,15 @@ def choose_specialize(message):
                          "Документы можно сдать как оффлайн, так и онлайн!"
                          "Telegram-бот приемной комиссии - http://t.me/GoAstanaPolytechBot",
                          parse_mode='html')
-
+    elif message.text == "Расчет конкурсных баллов":
+        photo = open('pic\entrance\srball.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+        photo = open('pic\entrance\srballdesign.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo)
+        bot.send_message(message.chat.id,
+                         "Приоритетные баллы - баллы по профильным предметам!\n"
+                         "Telegram-бот приемной комиссии - http://t.me/GoAstanaPolytechBot",
+                         parse_mode='html')
 
     elif message.text == "Назад":
         start(message)
