@@ -13,6 +13,13 @@ import mysql.connector
 
 bot = telebot.TeleBot('5515564481:AAHyZdFrYrJv_uoKj3Z3zZyCyTvuZbe_9pU')
 
+mydb = mysql.connector.connect(#это хуйня для соеденения
+    host='localhost',
+    user='root',
+    password='IosifStalin2',
+    port='3306',
+    database='pythonbot'
+)
 
 @bot.message_handler(content_types=['photo'])
 def get_user_photo(message):
@@ -39,7 +46,7 @@ def start(message):
 
 
 @bot.message_handler(content_types=['text'])
-def choose_specialize(message):
+def choose_specialize(message, COUNT=0):
     #ОСНОВНЫЕ КНОПКИ МЕНЮ
     if message.text == "Выбор специальностей":
         bot.send_message(message.chat.id, "Поступление в #APC2022 : наши специальности: \n"
@@ -130,20 +137,26 @@ def choose_specialize(message):
         bot.send_message(message.chat.id, 'Находится в разработке =)')
     elif message.text == "программисты_2022":
         bot.send_message(message.chat.id, 'Введите фамилию')
-        stre = message.text
-        count = 0;  # не трогай
+        COUNT += 1
+        if COUNT == 1:
+            stre = message.text
+            #print(stre)
+            count = 0  # не трогай
 
-        #mycursor = mydb.cursor()
+            mycursor = mydb.cursor()
 
-        #mycursor.execute('select * from users order by scorefull desc, scoreprof desc')  # сортировка
+            mycursor.execute('select * from users order by scorefull desc, scoreprof desc')  # сортировка
 
-        #users = mycursor.fetchall()
+            users = mycursor.fetchall()
 
-        #for user in users:  # это вообще не трогай
-        #    count += 1
-        #    if user[1] == stre:
-        #        messageStr = "Ты находишься на " + str(count) + " месте"
-        #        bot.send_message(message.chat.id, messageStr)
+            for user in users:  # это вообще не трогай
+                count += 1
+                if user[1] == stre:
+                    messageStr = "Ты находишься на " + str(count) + " месте"
+                    bot.send_message(message.chat.id, messageStr)
+
+
+
 
     elif message.text == "информационные системы_2022":
         bot.send_message(message.chat.id, 'Находится в разработке =)')
