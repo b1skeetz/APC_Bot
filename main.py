@@ -1,19 +1,12 @@
 import telebot
 from telebot import types
 import mysql.connector
+COUNT = 0
 
-'''mydb = mysql.connector.connect(#это хуйня для соеденения
-    host='localhost',
-    user='root',
-    password='IosifStalin2',
-    port='3306',
-    database='weather'
-)
-'''
 
 bot = telebot.TeleBot('5515564481:AAHyZdFrYrJv_uoKj3Z3zZyCyTvuZbe_9pU')
 
-mydb = mysql.connector.connect(#это хуйня для соеденения
+mydb = mysql.connector.connect(#это для соеденения
     host='localhost',
     user='root',
     password='IosifStalin2',
@@ -46,8 +39,9 @@ def start(message):
 
 
 @bot.message_handler(content_types=['text'])
-def choose_specialize(message, COUNT=0):
+def choose_specialize(message):
     #ОСНОВНЫЕ КНОПКИ МЕНЮ
+    global COUNT
     if message.text == "Выбор специальностей":
         bot.send_message(message.chat.id, "Поступление в #APC2022 : наши специальности: \n"
                                       "1. Программное обеспечение (Разработчик ПО) \n"
@@ -138,25 +132,22 @@ def choose_specialize(message, COUNT=0):
     elif message.text == "программисты_2022":
         bot.send_message(message.chat.id, 'Введите фамилию')
         COUNT += 1
-        if COUNT == 1:
-            stre = message.text
+    elif COUNT == 1:
+        stre = message.text
             #print(stre)
-            count = 0  # не трогай
+        count = 0  # не трогай
 
-            mycursor = mydb.cursor()
+        mycursor = mydb.cursor()
 
-            mycursor.execute('select * from users order by scorefull desc, scoreprof desc')  # сортировка
+        mycursor.execute('select * from users order by scorefull desc, scoreprof desc')  # сортировка
 
-            users = mycursor.fetchall()
+        users = mycursor.fetchall()
 
-            for user in users:  # это вообще не трогай
-                count += 1
-                if user[1] == stre:
-                    messageStr = "Ты находишься на " + str(count) + " месте"
-                    bot.send_message(message.chat.id, messageStr)
-
-
-
+        for user in users:  # это вообще не трогай
+            count += 1
+            if user[1] == stre:
+                messageStr = "Ты находишься на " + str(count) + " месте"
+                bot.send_message(message.chat.id, messageStr)
 
     elif message.text == "информационные системы_2022":
         bot.send_message(message.chat.id, 'Находится в разработке =)')
